@@ -25,30 +25,54 @@ export default {
   },
   methods: {
     // 发送登录请求
-    handleLogin() {
-      this.$http
-        .post(`login`, this.formdata)
-        .then(res => {
-          console.log(res);
-          const {
-            data: {
-              data,
-              meta: { msg, status }
-            }
-          } = res;
-          if (status === 200) {
-            // 成功时渲染home.vue
-            this.$router.push({
-              name: "home"
-            });
-          } else {
-            // 提示框
-            this.$message.error(msg);
-          }
-        })
-        .catch(err => {
-          console.log(err);
+    async handleLogin() {
+      const res = await this.$http.post(`login`, this.formdata);
+      console.log(res);
+      const {
+        data: {
+          data: { token },
+          meta: { msg, status }
+        }
+      } = res;
+
+      if (status === 200) {
+        // 把正确的用户的token保存
+        // 存值
+        localStorage.setItem("token", token);
+        // 取值
+        // const aa = localStorage.getItem("token");
+        // console.log(aa);
+
+        // 成功时渲染home.vue
+        this.$router.push({
+          name: "home"
         });
+      } else {
+        // 提示框
+        this.$message.error(msg);
+      }
+
+      // .then(res => {
+      //   console.log(res);
+      //   const {
+      //     data: {
+      //       data,
+      //       meta: { msg, status }
+      //     }
+      //   } = res;
+      //   if (status === 200) {
+      //     // 成功时渲染home.vue
+      //     this.$router.push({
+      //       name: "home"
+      //     });
+      //   } else {
+      //     // 提示框
+      //     this.$message.error(msg);
+      //   }
+      // })
+      // .catch(err => {
+      //   console.log(err);
+      // });
     }
   }
 };
