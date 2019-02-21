@@ -37,7 +37,10 @@ export default {
             }
           } = res;
           if (status === 200) {
-            console.log("success-----");
+            // 成功时渲染home.vue
+            this.$router.push({
+              name: "home"
+            });
           } else {
             // 提示框
             this.$message.error(msg);
