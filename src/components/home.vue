@@ -10,7 +10,7 @@
           <h2>电商后台管理系统</h2>
         </el-col>
         <el-col :span="1">
-          <a href="#" class="logout">退出</a>
+          <a href="#" class="logout" @click="handleLoginout()">退出</a>
         </el-col>
       </el-row>
     </el-header>
@@ -130,6 +130,19 @@ export default {
   // 页面加载之后
   mounted() {
     console.log(11111);
+  },
+  methods: {
+    // 退出
+    handleLoginout() {
+      // 1.清楚token
+      localStorage.clear();
+      // 2，来到登录
+      this.$router.push({
+        name: "login"
+      });
+      // 3.提示
+      this.$message.warning("退出成功");
+    }
   }
 };
 </script>
